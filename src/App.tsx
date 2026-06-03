@@ -7,7 +7,7 @@ import {
   Gift, Ticket, Sparkles, Youtube, Check, X, Shield, LockOpen
 } from 'lucide-react';
 
-const START_DATE = new Date('2024-02-14T00:00:00').getTime();
+const START_DATE = new Date('2026-03-22T00:00:00').getTime();
 
 // --- 1. Global Components ---
 
@@ -372,7 +372,7 @@ function MemoryTimeline() {
     }
   };
 
-  const Card = ({ date, title, text, special }: { date: string, title: string, text: string, special?: boolean }) => (
+  const Card = ({ date, title, text, special, imgUrl }: { date: string, title: string, text: string, special?: boolean, imgUrl?: string }) => (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -380,13 +380,11 @@ function MemoryTimeline() {
       className="bg-white p-5 rounded-2xl shadow-sm border border-rose-100 flex flex-col items-center w-full max-w-sm mx-auto mb-10 relative z-10"
     >
       <div className="absolute -top-4 bg-rose-50 border border-rose-200 text-rose-600 font-bold px-4 py-1 rounded-full text-sm shadow-sm">{date}</div>
-      <div className="w-full relative h-48 rounded-xl overflow-hidden bg-rose-50 border-2 border-dashed border-rose-200 flex items-center justify-center mt-2 mb-4">
+      <div className={`w-full relative h-48 rounded-xl overflow-hidden bg-rose-50 border-2 ${imgUrl ? 'border-solid' : 'border-dashed'} border-rose-200 flex items-center justify-center mt-2 mb-4`}>
         {special ? (
            <>
-             <div className="absolute inset-0 bg-white flex flex-col items-center justify-center">
-                <Gift className="text-rose-500 mb-2 w-12 h-12" />
-                <h3 className="font-bold text-rose-800 text-lg">Our First Trip!</h3>
-                <p className="text-rose-600 text-sm mt-1">Found completely by surprise.</p>
+             <div className="absolute inset-0 bg-white flex flex-col items-center justify-center overflow-hidden">
+                <img src="https://res.cloudinary.com/deeygdbqi/image/upload/v1779295096/photo_6084756567581463141_y_mjr7cj.jpg" alt="Surprise memory" className="w-full h-full object-cover" />
              </div>
              {!scratchRevealed && (
                <canvas 
@@ -406,6 +404,8 @@ function MemoryTimeline() {
                 )}
              </AnimatePresence>
            </>
+        ) : imgUrl ? (
+          <img src={imgUrl} alt={title} className="w-full h-full object-cover" />
         ) : (
           <div className="text-rose-400 flex flex-col items-center font-medium">
              <ImageIcon className="mb-2" /> Add photo here ♥
@@ -420,9 +420,9 @@ function MemoryTimeline() {
   return (
     <div className="relative py-12 px-4 w-full max-w-lg mx-auto">
       <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-rose-200 via-rose-300 to-rose-200 opacity-50 rounded-full" />
-      <Card date="Feb 14, 2024" title="The Beginning" text="The day everything changed for the better. A simple hello that became my forever." />
-      <Card date="Mar 20, 2024" title="Secret Surprise" text="Scratch off the card above to reveal one of our favorite memories." special />
-      <Card date="Present Day" title="Still Going Strong" text="Every day I find new reasons to love you more. Let's keep adding to this timeline." />
+      <Card date="Mar 22, 2026" title="The Beginning" text="The day everything changed for the better. A simple hello that became my forever." imgUrl="https://res.cloudinary.com/deeygdbqi/image/upload/v1779294551/photo_6084756567581463139_y_cgcpwc.jpg" />
+      <Card date="Apr 10, 2026" title="Secret Surprise" text="Scratch off the card above to reveal one of our favorite memories." special />
+      <Card date="Present Day" title="Still Going Strong" text="Every day I find new reasons to love you more. Let's keep adding to this timeline." imgUrl="https://res.cloudinary.com/deeygdbqi/image/upload/v1779294551/photo_6084756567581463139_y_cgcpwc.jpg" />
     </div>
   );
 }
@@ -505,7 +505,7 @@ function CouponCard({ data, onRedeem }: { data: any, onRedeem: (e: any) => void 
 
 function Mixtape() {
   // Hardcoded YouTube IDs
-  const videos = ['UCWooncYMbU'];
+  const videos = ['lY5V4hSLWY8', 'CwGbMYLjIpQ', 'Ip6cw8gfHHI', 'xGPeNN9S0Fg'];
 
   return (
     <div className="w-full max-w-3xl mx-auto relative z-10 px-4">
@@ -635,10 +635,10 @@ function DateNight({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void 
 
 function DinnerProposal() {
   const [details, setDetails] = useState({
-    loc: 'Le Petit Charm, Paris',
-    date: 'February 14, 2026',
-    time: '7:30 PM',
-    map: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937595!2d2.2922926156744046!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1699999999999!5m2!1sen!2sfr'
+    loc: 'Number One Chinese BBQ & Hot - Spicy Pot',
+    date: 'June 12, 2026',
+    time: '6:00 PM',
+    map: 'https://maps.google.com/maps?q=Number+One+Chinese+BBQ+Hot+Spicy+Pot&output=embed'
   });
   
   const [adminMode, setAdminMode] = useState(false);
@@ -781,12 +781,9 @@ function DinnerProposal() {
 }
 
 const MOCK_PHOTOS = [
-  { id: 1, url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&q=80&w=800', note: 'Our first trip together ❤️', date: 'Mar 12, 2024', loc: 'Kyoto, Japan', rot: '-rotate-2' },
-  { id: 2, url: 'https://images.unsplash.com/photo-1516483638261-f40af5ffce75?auto=format&fit=crop&q=80&w=800', note: 'Coffee dates are the best', date: 'Apr 5, 2024', loc: 'The Corner Cafe', rot: 'rotate-1' },
-  { id: 3, url: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&q=80&w=800', note: 'Anniversary dinner 🥂', date: 'Feb 14, 2025', loc: 'Le Petit Charm', rot: '-rotate-1' },
-  { id: 4, url: 'https://images.unsplash.com/photo-1518105570881-224422e18585?auto=format&fit=crop&q=80&w=800', note: 'Beach sunset walks', date: 'Jul 20, 2025', loc: 'Santa Monica', rot: 'rotate-2' },
-  { id: 5, url: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800', note: 'Late night giggles', date: 'Oct 08, 2025', loc: 'Our Living Room', rot: '-rotate-1' },
-  { id: 6, url: 'https://images.unsplash.com/photo-1606244864456-8bee63fce472?auto=format&fit=crop&q=80&w=800', note: 'Spontaneous roadtrip', date: 'Nov 22, 2025', loc: 'Pacific Coast Highway', rot: 'rotate-1' },
+  { id: 1, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1780505349/photo_6125239838391866636_y_trpyvn.jpg', note: 'Our beautiful moment ❤️', date: 'Apr 5, 2026', loc: 'The Corner Cafe', rot: 'rotate-1' },
+  { id: 2, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1780505350/photo_6125239838391866635_y_oskqkf.jpg', note: 'Our beautiful moment ❤️', date: 'May 14, 2026', loc: 'Le Petit Charm', rot: '-rotate-1' },
+  { id: 3, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1779294551/photo_6084756567581463139_y_cgcpwc.jpg', note: 'Our beautiful moment ❤️', date: 'Jun 2, 2026', loc: 'With You', rot: '-rotate-2' },
 ];
 
 function PhotoAlbum({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void }) {
@@ -805,7 +802,7 @@ function PhotoAlbum({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void
       setPasscode(newPass);
       
       if (newPass.length === 4) {
-        if (newPass === '5201') {
+        if (newPass === '2502') {
           setTimeout(() => setUnlocked(true), 400);
         } else {
           setShake(true);
@@ -824,7 +821,7 @@ function PhotoAlbum({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void
         <motion.div animate={shake ? { x: [-10, 10, -10, 10, 0] } : {}} transition={{ duration: 0.4 }} className="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-xl border border-rose-100 flex flex-col items-center w-full">
            <Lock size={40} className="text-rose-400 mb-4 drop-shadow-sm" />
            <h2 className="text-2xl font-serif font-bold text-rose-900 mb-2">Secret Album</h2>
-           <p className="text-rose-500 text-sm mb-8 text-center max-w-[200px]">Enter the passcode to enter our memories</p>
+           <p className="text-rose-500 text-sm mb-8 text-center max-w-[200px]">Enter the passcode to enter our memories (Hint: THK's BD)</p>
            
            <div className="flex gap-4 mb-8">
              {[0, 1, 2, 3].map(i => (
