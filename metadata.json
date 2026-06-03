@@ -1,0 +1,6 @@
+{
+  "name": "Couple's Space",
+  "description": "A private, interactive digital space for couples featuring a relationship counter, memory timeline, love coupons, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
