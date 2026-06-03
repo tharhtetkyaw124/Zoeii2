@@ -180,15 +180,23 @@ function EnvelopeScreen({ onOpen }: { onOpen: () => void }) {
   const [phase, setPhase] = useState<'idle' | 'opening' | 'letter'>('idle');
   const [skipped, setSkipped] = useState(false);
   
-  const text = `My dearest,
+  const text = `Zoeii,
 
-Since the day we met, my world has been brighter than ever before. 
+There are a thousand ways I could try to tell you
+how much you mean to me — but words always feel
+too small for something this enormous.
 
-I made this little space just for us—a place to keep our memories, our promises, and our dreams.
+You are the reason my days feel warmer,
+my laughter comes easier, and my heart
+feels impossibly full.
 
-Here is to every moment we have shared, and to the thousands more waiting for us.
+Every memory we've made together is a treasure
+I carry with me everywhere I go.
 
-I love you.`;
+This little world I built — it's yours.
+All of it. Always.
+
+With every heartbeat, yours truly ♥`;
 
   const Paragraphs = text.split('\n\n');
   const [pIndex, setPIndex] = useState(0);
