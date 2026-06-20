@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Heart, Music, Play, Pause, Volume2, Mail, Lock, 
   MapPin, Calendar, Clock, Edit3, Image as ImageIcon, 
-  Gift, Ticket, Sparkles, Youtube, Check, X, Shield, LockOpen
+  Gift, Ticket, Sparkles, Youtube, Check, X, Shield, LockOpen, Gamepad2
 } from 'lucide-react';
 
 const START_DATE = new Date('2026-03-22T00:00:00').getTime();
@@ -429,6 +429,7 @@ function MemoryTimeline() {
     <div className="relative py-12 px-4 w-full max-w-lg mx-auto">
       <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-rose-200 via-rose-300 to-rose-200 opacity-50 rounded-full" />
       <Card date="Mar 22, 2026" title="The Beginning" text="The day everything changed for the better. A simple hello that became my forever." imgUrl="https://res.cloudinary.com/deeygdbqi/image/upload/v1779294551/photo_6084756567581463139_y_cgcpwc.jpg" />
+      <Card date="Our First Date" title="When Time Stood Still" text="Two souls meeting, sharing a moment that sparked a beautiful eternity. The sweetest beginning I could ever ask for." imgUrl="https://res.cloudinary.com/deeygdbqi/image/upload/v1781630240/photo_6165883242762931763_y_qxnhxr.jpg" />
       <Card date="Apr 10, 2026" title="Secret Surprise" text="Scratch off the card above to reveal one of our favorite memories." special />
       <Card date="Present Day" title="Still Going Strong" text="Every day I find new reasons to love you more. Let's keep adding to this timeline." imgUrl="https://res.cloudinary.com/deeygdbqi/image/upload/v1779294551/photo_6084756567581463139_y_cgcpwc.jpg" />
     </div>
@@ -513,7 +514,7 @@ function CouponCard({ data, onRedeem }: { data: any, onRedeem: (e: any) => void 
 
 function Mixtape() {
   // Hardcoded YouTube IDs
-  const videos = ['lY5V4hSLWY8', 'CwGbMYLjIpQ', 'Ip6cw8gfHHI', 'xGPeNN9S0Fg'];
+  const videos = ['lY5V4hSLWY8', 'CwGbMYLjIpQ', 'Ip6cw8gfHHI', 'xGPeNN9S0Fg', 'TbLT12eg-lw', 'YuH_90giGTQ', '3eT464L1YRA'];
 
   return (
     <div className="w-full max-w-3xl mx-auto relative z-10 px-4">
@@ -643,10 +644,11 @@ function DateNight({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void 
 
 function DinnerProposal() {
   const [details, setDetails] = useState({
-    loc: 'Number One Chinese BBQ & Hot - Spicy Pot',
-    date: 'June 12, 2026',
-    time: '6:00 PM',
-    map: 'https://maps.google.com/maps?q=Number+One+Chinese+BBQ+Hot+Spicy+Pot&output=embed'
+    loc: 'Koori',
+    date: 'June 21, 2026',
+    time: '5:00 PM',
+    map: 'https://maps.google.com/maps?q=Koori&output=embed',
+    mapLink: 'https://maps.app.goo.gl/cR8e53MXf1jSNaQa6'
   });
   
   const [adminMode, setAdminMode] = useState(false);
@@ -728,7 +730,7 @@ function DinnerProposal() {
           <div className="flex items-center text-rose-900 bg-rose-50 p-4 rounded-xl border border-rose-100">
              <MapPin className="text-rose-500 mr-4 shrink-0" size={28}/>
              <div>
-               <p className="font-bold text-lg leading-tight">{details.loc}</p>
+               <a href={details.mapLink} target="_blank" rel="noopener noreferrer" className="font-bold text-lg leading-tight hover:underline text-rose-900">{details.loc}</a>
              </div>
           </div>
           <div className="flex items-center text-rose-900 bg-rose-50 p-4 rounded-xl border border-rose-100">
@@ -792,6 +794,7 @@ const MOCK_PHOTOS = [
   { id: 1, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1780505349/photo_6125239838391866636_y_trpyvn.jpg', note: 'Our beautiful moment ❤️', date: 'Apr 5, 2026', loc: 'The Corner Cafe', rot: 'rotate-1' },
   { id: 2, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1780505350/photo_6125239838391866635_y_oskqkf.jpg', note: 'Our beautiful moment ❤️', date: 'May 14, 2026', loc: 'Le Petit Charm', rot: '-rotate-1' },
   { id: 3, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1779294551/photo_6084756567581463139_y_cgcpwc.jpg', note: 'Our beautiful moment ❤️', date: 'Jun 2, 2026', loc: 'With You', rot: '-rotate-2' },
+  { id: 4, url: 'https://res.cloudinary.com/deeygdbqi/image/upload/v1781630240/photo_6165883242762931764_y_xe6qqb.jpg', note: 'Our first date and the first of many flowers ✨', date: 'Jun 12, 2026', loc: 'With You', rot: 'rotate-2' },
 ];
 
 function PhotoAlbum({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void }) {
@@ -933,9 +936,137 @@ function PhotoAlbum({ onOpenChange }: { onOpenChange?: (isOpen: boolean) => void
   );
 }
 
+function MemoryGame() {
+  const [cards, setCards] = useState<any[]>([]);
+  const [flipped, setFlipped] = useState<number[]>([]);
+  const [matched, setMatched] = useState<number[]>([]);
+  const [popup, setPopup] = useState<string | null>(null);
+
+  const CARDS_DATA = [
+    { id: 1, symbol: '❤️', story: 'My heart beats only for you. I love you more than words can ever say.' },
+    { id: 2, symbol: '⭐', story: 'You are the brightest star in my universe, illuminating everything around you.' },
+    { id: 3, symbol: '☀️', story: 'You bring sunshine into my life. Your smile is my absolute favorite thing.' },
+    { id: 4, symbol: '🌙', story: 'I love you to the moon and back. Thank you for being you.' },
+    { id: 5, symbol: '✨', story: 'You make everything feel magical. Being with you is a dream come true.' },
+    { id: 6, symbol: '🌸', story: 'You are the most beautiful person I know, inside and out.' },
+  ];
+
+  useEffect(() => {
+    const deck = [...CARDS_DATA, ...CARDS_DATA]
+      .sort(() => Math.random() - 0.5)
+      .map((card, index) => ({ ...card, uid: index }));
+    setCards(deck);
+  }, []);
+
+  const handleCardClick = (index: number) => {
+    if (flipped.length === 2 || flipped.includes(index) || matched.includes(cards[index].id)) {
+      return;
+    }
+
+    const newFlipped = [...flipped, index];
+    setFlipped(newFlipped);
+
+    if (newFlipped.length === 2) {
+      const match = cards[newFlipped[0]].id === cards[newFlipped[1]].id;
+      if (match) {
+        setTimeout(() => {
+          setMatched((prev) => [...prev, cards[newFlipped[0]].id]);
+          setFlipped([]);
+          setPopup(cards[newFlipped[0]].story);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          setFlipped([]);
+        }, 1000);
+      }
+    }
+  };
+
+  return (
+    <div className="w-full max-w-3xl mx-auto relative z-10 px-4 min-h-[70vh] flex flex-col items-center">
+      <div className="text-center mb-8">
+         <h2 className="text-3xl sm:text-4xl font-extrabold text-rose-800 mb-4 inline-block drop-shadow-sm font-serif">
+           Our Memory Match
+         </h2>
+         <p className="text-rose-700 font-medium max-w-lg mx-auto">
+           Flip the cards to match the symbols and uncover the stories behind them.
+         </p>
+      </div>
+
+      <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-md mx-auto" style={{ perspective: 1000 }}>
+        {cards.map((card, index) => {
+          const isFlipped = flipped.includes(index) || matched.includes(card.id);
+          return (
+            <div
+              key={card.uid}
+              className="relative aspect-[3/4] w-full cursor-pointer transition-transform duration-500"
+              style={{ transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+              onClick={() => handleCardClick(index)}
+            >
+              <div className="absolute inset-0 w-full h-full bg-white/80 backdrop-blur-sm rounded-xl border border-rose-200 shadow-sm flex items-center justify-center" style={{ backfaceVisibility: 'hidden' }}>
+                <Heart className="text-rose-300 w-8 h-8 opacity-50" />
+              </div>
+              <div className="absolute inset-0 w-full h-full bg-white rounded-xl border border-rose-100 shadow-md flex items-center justify-center text-4xl sm:text-5xl" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                {card.symbol}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <AnimatePresence>
+        {popup && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-rose-950/20 backdrop-blur-sm"
+            onClick={() => setPopup(null)}
+          >
+            <div className="bg-white p-6 sm:p-8 rounded-3xl max-w-sm w-full shadow-2xl border border-rose-100 relative text-center" onClick={(e) => e.stopPropagation()}>
+              <Heart className="text-rose-500 w-12 h-12 mx-auto mb-4" />
+              <p className="text-lg text-rose-800 font-medium leading-relaxed italic border-l-4 border-rose-300 pl-4 mb-6">
+                "{popup}"
+              </p>
+              <button 
+                onClick={() => setPopup(null)}
+                className="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-2 px-6 rounded-full transition-colors w-full"
+              >
+                Keep Playing
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {matched.length === CARDS_DATA.length && (
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          className="mt-8 text-center"
+        >
+          <p className="text-xl text-rose-600 font-bold mb-4">You matched all our memories! 💖</p>
+          <button 
+            onClick={() => {
+              setMatched([]);
+              setFlipped([]);
+              const deck = [...CARDS_DATA, ...CARDS_DATA]
+                .sort(() => Math.random() - 0.5)
+                .map((card, index) => ({ ...card, uid: index }));
+              setCards(deck);
+            }}
+            className="bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors"
+          >
+            Play Again
+          </button>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
 // --- 3. Main Application Assembly ---
 
-type ScreenType = 'letter' | 'timeline' | 'coupons' | 'mixtape' | 'magicbox' | 'dinner' | 'album';
+type ScreenType = 'letter' | 'timeline' | 'coupons' | 'mixtape' | 'magicbox' | 'dinner' | 'album' | 'games';
 
 export default function CouplesApp() {
   const [screen, setScreen] = useState<ScreenType>('letter');
@@ -948,6 +1079,7 @@ export default function CouplesApp() {
     { id: 'coupons', icon: Ticket, label: 'Coupons' },
     { id: 'mixtape', icon: Youtube, label: 'Mixtape' },
     { id: 'magicbox', icon: Sparkles, label: 'MagicBox' },
+    { id: 'games', icon: Gamepad2, label: 'Games' },
     { id: 'dinner', icon: MapPin, label: 'RSVP' }
   ];
 
@@ -972,6 +1104,7 @@ export default function CouplesApp() {
                 {screen === 'coupons' && <LoveCoupons />}
                 {screen === 'mixtape' && <Mixtape />}
                 {screen === 'magicbox' && <DateNight onOpenChange={setHideNav} />}
+                {screen === 'games' && <MemoryGame />}
                 {screen === 'dinner' && <DinnerProposal />}
              </motion.div>
           </AnimatePresence>
