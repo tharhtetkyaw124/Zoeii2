@@ -648,7 +648,7 @@ function DinnerProposal() {
   const [details, setDetails] = useState({
     loc: 'LEAF Cafe & Plants',
     date: 'August 2, 2026',
-    time: '5:00 PM',
+    time: '1:00 PM',
     map: 'https://maps.google.com/maps?q=LEAF+Cafe+and+Plants&output=embed',
     mapLink: 'https://maps.app.goo.gl/4jbKo29Qz2XjnmiT9'
   });
